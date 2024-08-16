@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :recursive, Recursive.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "dean",
+  password: "kamanu254",
   hostname: "localhost",
   database: "recursive_dev",
   stacktrace: true,
