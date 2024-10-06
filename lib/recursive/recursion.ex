@@ -10,6 +10,8 @@ defmodule Recursive.Recursion do
     upto(num - 1)
   end
 
+  # nnn
+
   # * This is very inefficient when the number is too large and uses a lot of memory. Try factorial(400000)
   # def factorial(n), do: n * factorial(n - 1)
 
