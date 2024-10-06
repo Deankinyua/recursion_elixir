@@ -19,10 +19,6 @@ defmodule Recursive.Fibogpt do
   # * The number of recursive calls will be equal to the number of variables being used
   # * in the tail recursive version
 
-  # def fibonaci(n) do
-  #   fibonaci(n - 1) + fibonaci(n - 2)
-  # end
-
   def naive_exp(_x, 0), do: 1
 
   def naive_exp(x, n) do
@@ -44,6 +40,9 @@ defmodule Recursive.Fibogpt do
   end
 
   # exp(3, 3) => exp_tail(3, 3, 1) => exp_tail(3, 2, 3) => exp_tail(3, 1, 9) => exp_tail(3, 0, 27)
+  # def fibonaci(n) do
+  #   fibonaci(n - 1) + fibonaci(n - 2)
+  # end
 
   def fib(n), do: fib(n, 0, 1)
 
