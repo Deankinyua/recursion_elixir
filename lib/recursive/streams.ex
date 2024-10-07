@@ -56,6 +56,12 @@ defmodule Recursive.Streams do
     File.read!(path)
   end
 
+  # ? Function capturing Elixir
+  # compare = &<=/2
+
+  # compare.(3, 5)
+  # => true
+
   # In contrast, if you used Enum functions everywhere,
   # you would have to run multiple iterations over each intermediate list, which would
   # incur a performance and memory-usage penalty
