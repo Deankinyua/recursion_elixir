@@ -32,5 +32,17 @@ defmodule Recursive.Process do
         send(caller, {:query_result, run_query(query_def)})
       end)
     end
+
+    # ? As you can see there is a difference in the value of self in the 2 statements
+    Enum.each(1..5, &async_query.("query #{&1}"))
+
+    get_result = fn ->
+      receive do
+        {:query_result, result} -> result
+      end
+    end
+
+    results = Enum.map(1..5, fn _ -> get_result.() end)
+    results
   end
 end
