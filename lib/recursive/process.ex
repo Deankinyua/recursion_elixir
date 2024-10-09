@@ -1,11 +1,7 @@
 defmodule Recursive.Process do
   def run_query(query_def) do
-    run_query = fn query_def ->
-      :timer.sleep(2000)
-      "#{query_def} result"
-    end
-
-    run_query.(query_def)
+    :timer.sleep(2000)
+    "#{query_def} result"
   end
 
   def asyc_work do
