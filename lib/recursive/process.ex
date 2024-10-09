@@ -1,4 +1,8 @@
 defmodule Recursive.Process do
+  # * be aware that the basic message passing is the asychronous fire and forget way
+  # * There is no built-in construct to perform sychronous message passing and therefore
+  # * we have to implement it ourselves by sending a message with an attached pid
+  # * that the receiver can use to immediately send us a response back
   def run_query(query_def) do
     :timer.sleep(2000)
     "#{query_def} result"

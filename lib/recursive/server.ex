@@ -9,6 +9,8 @@ defmodule Recursive.Server do
     spawn(&loop/0)
   end
 
+  # * loop/0 is used to receive messages from clients and return a response
+
   defp loop do
     receive do
       {:run_query, caller, query_def} ->
@@ -21,5 +23,18 @@ defmodule Recursive.Server do
   defp run_query(query_def) do
     :timer.sleep(2000)
     "#{query_def} result"
+  end
+
+  def run_async(server_pid, query_def) do
+    send(server_pid, {:run_query, self(), query_def})
+  end
+
+  def get_result do
+    receive do
+      {:query_result, result} -> result
+    after
+      5000 ->
+        {:error, :timeout}
+    end
   end
 end
