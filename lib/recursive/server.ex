@@ -6,23 +6,26 @@ defmodule Recursive.Server do
   # *  it creates the long-running process that runs forever.
 
   def start do
-    spawn(&loop/0)
+    spawn(fn ->
+      connection = :rand.uniform(1000)
+      loop(connection)
+    end)
   end
 
   # * loop/0 is used to receive messages from clients and return a response
 
-  defp loop do
+  defp loop(connection) do
     receive do
       {:run_query, caller, query_def} ->
-        send(caller, {:query_result, run_query(query_def)})
+        send(caller, {:query_result, run_query(connection, query_def)})
     end
 
-    loop()
+    loop(connection)
   end
 
-  defp run_query(query_def) do
+  defp run_query(connection, query_def) do
     :timer.sleep(2000)
-    "#{query_def} result"
+    "Connection #{connection}:  #{query_def} result"
   end
 
   def run_async(server_pid, query_def) do
@@ -36,5 +39,20 @@ defmodule Recursive.Server do
       5000 ->
         {:error, :timeout}
     end
+  end
+
+  def parallel do
+    pool = Enum.map(1..100, fn _ -> start() end)
+
+    1..5
+    |> Enum.each(fn query_def ->
+      server_pid = Enum.at(pool, :rand.uniform(100) - 1)
+      run_async(server_pid, query_def)
+    end)
+  end
+
+  def parallel_receive do
+    1..5
+    |> Enum.map(fn _ -> get_result() end)
   end
 end
